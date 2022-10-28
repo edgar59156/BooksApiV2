@@ -5,9 +5,6 @@ import '../../models/Books.dart';
 import '../../provider/books_provider.dart';
 import '../../screens/details_screen.dart';
 
-
-
-
 class Popular extends StatelessWidget {
   const Popular({
     Key? key,
@@ -15,6 +12,8 @@ class Popular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String errorLink =
+        "https://img.freepik.com/free-vector/funny-error-404-background-design_1167-219.jpg?w=740&t=st=1658904599~exp=1658905199~hmac=131d690585e96267bbc45ca0978a85a2f256c7354ce0f18461cd030c5968011c";
     var data = Provider.of<AppNotifier>(context);
     return FutureBuilder(
         future: data.getBookData(),
@@ -25,14 +24,12 @@ class Popular extends StatelessWidget {
             );
           }
           if (snapshot.hasData) {
-            // print(snapshot.data?.items![0].id);
             return LayoutBuilder(builder: (context, constraints) {
               return ListView.builder(
                 shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                //itemCount: snapshot.data?.totalItems,
-                itemCount: 30,
                 physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data!.items!.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -40,95 +37,60 @@ class Popular extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailsScreen(
-                                    id: snapshot.data?.items![index].id,
-                                  )));
+                                  id: snapshot.data?.items?[index].id,color: Colors.lightBlue!)));
                     },
                     child: Container(
-                      //width: width / 1.5,
-                      width: constraints.maxWidth * 0.8,
-                      child: Row(
+                      width: constraints.maxWidth * 0.30,
+                      padding:
+                          const EdgeInsets.only(left: 16, bottom: 5, top: 5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            children: [
-                              Card(
-                                elevation: 2,
-                                margin: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Container(
-                                  //height: height * 0.18,
-                                  // width: 100,
-                                  height: constraints.maxHeight,
-                                  width: constraints.maxWidth * 0.30,
-
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image(
-                                      image: NetworkImage(
-                                          "${snapshot.data?.items![index].volumeInfo?.imageLinks?.thumbnail}"),
-                                      fit: BoxFit.cover,
-                                    ),
+                          Card(
+                            elevation: 2,
+                            margin: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Container(
+                              //height: height * 0.18,
+                              height: constraints.maxHeight * 0.6,
+                              width: constraints.maxWidth * 0.5,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image(
+                                  image: NetworkImage(
+                                    "${snapshot.data?.items![index].volumeInfo?.imageLinks?.thumbnail ?? errorLink}",
                                   ),
+                                  fit: BoxFit.fill,
                                 ),
-                              )
-                            ],
-                          ),
-                          SizedBox(width: constraints.maxWidth * 0.03),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    "${snapshot.data?.items![index].volumeInfo!.authors?.length != 0 ? snapshot.data?.items![index].volumeInfo!.authors![0] : "Censored"}",
-                                    // maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4
-                                        ?.copyWith(
-                                          fontSize:
-                                              constraints.maxWidth * 0.038,
-                                        )),
-                                Text(
-                                    "${snapshot.data?.items![index].volumeInfo?.title}",
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2
-                                        ?.copyWith(
-                                            fontSize:
-                                                constraints.maxWidth * 0.048)),
-                                Text(
-                                  "${snapshot.data?.items![index].volumeInfo!.categories?.length != 0 ? snapshot.data?.items![index].volumeInfo!.categories![0] : "Unknown"}",
-                                  maxLines: 1,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4
-                                      ?.copyWith(
-                                          fontSize:
-                                              constraints.maxWidth * 0.038),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  height: constraints.maxHeight * 0.2,
-                                  width: constraints.maxWidth * 0.18,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Text(
-                                    "\$${snapshot.data?.items![index].volumeInfo?.pageCount ?? "96.9"}",
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                const Spacer(
-                                  flex: 2,
-                                )
-                              ],
+                              ),
                             ),
-                          )
+                          ),
+                          Text(
+                            "${snapshot.data?.items![index].volumeInfo?.title}",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4
+                                ?.copyWith(
+                                    fontSize: constraints.maxWidth * 0.035,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                          Container(
+                            height: constraints.maxHeight * 0.1,
+                            width: constraints.maxWidth * 0.18,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.amber[300],
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Text(
+                              "${snapshot.data?.items![index].volumeInfo!.categories?.length != 0 ? snapshot.data?.items![index].volumeInfo!.categories![0] : "Unknown"}",
+                              style:
+                                  TextStyle(fontSize: 8, color: Colors.white),
+                            ),
+                          ),
                         ],
                       ),
                     ),

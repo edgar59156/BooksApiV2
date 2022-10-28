@@ -19,7 +19,7 @@ class AnimeBooks extends StatelessWidget {
         "https://img.freepik.com/free-vector/funny-error-404-background-design_1167-219.jpg?w=740&t=st=1658904599~exp=1658905199~hmac=131d690585e96267bbc45ca0978a85a2f256c7354ce0f18461cd030c5968011c";
     var data = Provider.of<AppNotifier>(context);
     return FutureBuilder(
-        future: data.getBookData2(),
+        future: data.getBookDataAnime(),
         builder: (context, AsyncSnapshot<Books> snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -40,7 +40,7 @@ class AnimeBooks extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailsScreen(
-                                  id: snapshot.data?.items?[index].id)));
+                                  id: snapshot.data?.items?[index].id,color: Colors.yellow[200]!)));
                     },
                     child: Container(
                       width: constraints.maxWidth * 0.30,

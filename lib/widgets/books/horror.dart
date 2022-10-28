@@ -36,7 +36,7 @@ class HorrorBooks extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailsScreen(
-                                  id: snapshot.data?.items?[index].id)));
+                                  id: snapshot.data?.items?[index].id,color: Colors.red!)));
                     },
                     child: Container(
                       width: constraints.maxWidth * 0.30,

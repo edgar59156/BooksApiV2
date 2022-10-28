@@ -38,7 +38,7 @@ class NovelBooks extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailsScreen(
-                                  id: snapshot.data?.items?[index].id)));
+                                  id: snapshot.data?.items?[index].id,color: Colors.pink[200]!)));
                     },
                     child: Container(
                       width: constraints.maxWidth * 0.30,

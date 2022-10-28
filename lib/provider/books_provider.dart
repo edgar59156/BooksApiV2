@@ -9,25 +9,19 @@ class AppNotifier extends ChangeNotifier {
 //Main api Books
   Future<Books> getBookData() async {
     var res = await bookApi.getBooks();
-    //print(res);
     var data = jsonDecode(res);
-    // print(data["items"][0]["volumeInfo"]["authors"]);
-    // data["items"];
-
     return Books.fromJson(data);
   }
 
 //Anime Books
-  Future<Books> getBookData2() async {
-    var res = await bookApi.getBooks2();
-    //print(res);
+  Future<Books> getBookDataAnime() async {
+    var res = await bookApi.getBooksAnime();
     var data = jsonDecode(res);
-
     return Books.fromJson(data);
   }
 
 //Adventure Books
-  Future<Books> getBookData3() async {
+  Future<Books> getBookDataAdventure() async {
     var res = await bookApi.getBooks3();
     //print(res);
     var data = jsonDecode(res);

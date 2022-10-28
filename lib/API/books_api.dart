@@ -36,7 +36,7 @@ class BookApi {
   }
 
 //Amine Books
-  Future getBooks2() async {
+  Future getBooksAnime() async {
     final response = await http.get(
       Uri.parse(
           "https://www.googleapis.com/books/v1/volumes?q=amine+manga&maxResults=39"),
