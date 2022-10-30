@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../models/DetailModel.dart';
 import '../provider/books_provider.dart';
+
 
 class DetailsScreen extends StatefulWidget {
   DetailsScreen(

@@ -1,7 +1,7 @@
 import 'package:books/provider/books_provider.dart';
 import 'package:books/provider/theme_provider.dart';
 import 'package:books/screens/home_screen.dart';
-import 'package:books/screens/main_screen.dart';
+
 import 'package:books/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +44,7 @@ class PMSNApp extends StatelessWidget {
       
       routes: {
         '/home': (BuildContext context) => HomeScreen(),
-        '/main': (BuildContext context) => MainScreen(),
+        
       },
     );
   }
