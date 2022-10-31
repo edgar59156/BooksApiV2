@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/DetailModel.dart';
 import '../provider/books_provider.dart';
-
 
 class DetailsScreen extends StatefulWidget {
   DetailsScreen(
@@ -188,7 +188,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "${snapshot.data?.volumeInfo?.authors?[0]}",
+                                                  "${snapshot.data?.volumeInfo!.authors?.length != 0 ? snapshot.data?.volumeInfo!.authors![0] : "Censored"}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline5
@@ -209,7 +209,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                       ?.copyWith(fontSize: 16),
                                                 ),
                                                 Text(
-                                                  "${snapshot.data?.volumeInfo?.categories?[0]}",
+                                                  "${snapshot.data?.volumeInfo?.categories?.length != 0 ? snapshot.data?.volumeInfo!.categories![0] : "Unkwon"}",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: Theme.of(context)
@@ -236,9 +236,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(12),
-                                    child: Text(
-                                      "${snapshot.data?.volumeInfo?.description}",
-                                    ),
+                                    child: Html(
+                                        data:
+                                            "${snapshot.data?.volumeInfo?.description}",
+                                      
+                                        ),
                                   ),
                                   const SizedBox(height: 10),
                                   ElevatedButton(
